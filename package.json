@@ -1,0 +1,23 @@
+{
+  "name": "treasure-map",
+  "version": "0.0.1",
+  "description": "Cardon IT technical test",
+  "repository": "https://github.com/Mr-Monster-0248/treasure-map",
+  "author": "Thibault LEPEZ",
+  "license": "UNLICENSE",
+  "private": true,
+  "scripts": {
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "build": "tsc",
+    "fix": "gts fix",
+    "prepare": "yarn run compile",
+    "pretest": "yarn run compile",
+    "posttest": "yarn run lint"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.3",
+    "gts": "^3.1.0",
+    "@types/node": "^14.11.2"
+  }
+}
