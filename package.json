@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "gts lint",
     "clean": "gts clean",
-    "build": "tsc",
+    "compile": "tsc",
     "fix": "gts fix",
     "prepare": "yarn run compile",
     "pretest": "yarn run compile",
