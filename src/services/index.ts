@@ -1,0 +1,1 @@
+export {getMapFromLines} from './getMapFromLines';

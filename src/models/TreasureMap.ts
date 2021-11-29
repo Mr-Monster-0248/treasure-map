@@ -1,6 +1,7 @@
 import {Tile} from './Tile.interface';
-import {TileBuilder} from './TileBuilder';
+import {TileBuilder} from '../tools/TileBuilder';
 import {TileType} from './TileType.enum';
+import MapBuilder from '../tools/MapBuilder';
 
 export class TreasureMap {
   static readonly IDENTIFIER = 'C';
@@ -43,5 +44,13 @@ export class TreasureMap {
       throw new RangeError("tile out of terrain's range");
 
     this.terrain[tile.y][tile.x] = tile.toTile();
+  }
+
+  public static fromMapBuilder(builder: MapBuilder): TreasureMap {
+    return new TreasureMap(
+      builder.map.height,
+      builder.map.width,
+      builder.tiles
+    );
   }
 }
