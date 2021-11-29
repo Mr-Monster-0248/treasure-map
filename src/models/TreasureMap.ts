@@ -38,9 +38,9 @@ export class TreasureMap {
 
   private addTile(tile: TileBuilder) {
     if (tile.x > this.width || tile.x < 0)
-      throw new Error("tile out of terrain's range");
+      throw new RangeError("tile out of terrain's range");
     if (tile.y > this.height || tile.y < 0)
-      throw new Error("tile out of terrain's range");
+      throw new RangeError("tile out of terrain's range");
 
     this.terrain[tile.y][tile.x] = tile.toTile();
   }
