@@ -1,15 +1,20 @@
+import {TileType} from '../models/TileType.enum';
 import {TreasureMap} from '../models/TreasureMap';
 import MapBuilder from '../tools/MapBuilder';
 import {TileBuilder} from '../tools/TileBuilder';
 
 function isCommand(line: string): boolean {
   const char = line.charAt(0);
-  if (char === 'C') return true;
-  else if (char === 'M') return true;
-  else if (char === 'T') return true;
-  else if (char === 'A') return true;
-  else if (char === '#') return true;
-  else return false;
+  switch (char) {
+    case 'C':
+    case TileType.MOUNTAIN:
+    case TileType.TREASURE:
+    case 'A':
+    case '#':
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function getMapFromLines(lines: string[]): TreasureMap {
@@ -17,22 +22,13 @@ export function getMapFromLines(lines: string[]): TreasureMap {
 
   for (let i = 0; i < lines.length; i++) {
     if (isCommand(lines[i])) {
-      switch (lines[i]) {
-        case 'C':
-          map.setMap(lines[i]);
-          break;
-        case 'M':
-        case 'T':
-          map.tiles.push(TileBuilder.fromLine(lines[i]));
-          break;
-        case 'A':
-        case '#':
-          break;
-        default:
-          throw new Error('Unsupported identifier');
+      if (lines[i].charAt(0) === 'C') {
+        map.setMap(lines[i]);
+      } else if (lines[i].charAt(0) === 'M' || lines[i].charAt(0) === 'T') {
+        map.tiles.push(TileBuilder.fromLine(lines[i]));
       }
     } else {
-      throw new Error(`invalid char ${lines[i]}`);
+      throw new Error(`invalid char "${lines[i].charAt(0)}"`);
     }
   }
 

@@ -17,9 +17,9 @@ export default class MapBuilder {
 
   public setMap(line: string) {
     if (this.map.height !== 0 || this.map.width !== 0)
-      throw new Error('Map allready set');
+      throw new Error('Map already set');
     else {
-      const [id, height, width] = line.split(' - ');
+      const [id, width, height] = line.split(' - ');
       if (id === 'C' && height && width) {
         this.map.height = parseInt(height);
         this.map.width = parseInt(width);
