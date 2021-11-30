@@ -1,0 +1,14 @@
+name: CI
+
+on: [push]
+
+jobs:
+  Run-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+      - name: Install modules
+        uses: yarn
+      - name: Run tests
+        uses: yarn test
