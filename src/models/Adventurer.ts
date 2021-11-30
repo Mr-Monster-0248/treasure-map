@@ -22,4 +22,26 @@ export class Adventurer {
     this.direction = direction;
     this.moves = moves;
   }
+  public static fromLine(line: string): Adventurer {
+    const [id, name, x, y, direction, preMoves] = line.trim().split(' - ');
+    const moves = preMoves.trim().split('');
+    if (
+      id === 'A' &&
+      name &&
+      x &&
+      y &&
+      isValidDirection(direction) &&
+      isOnlyValidMoves(moves)
+    ) {
+      return new Adventurer(
+        name,
+        parseInt(x),
+        parseInt(y),
+        direction as Direction,
+        moves as Move[]
+      );
+    } else {
+      throw new Error('Impossible to convert line in Adventurer');
+    }
+  }
 }
