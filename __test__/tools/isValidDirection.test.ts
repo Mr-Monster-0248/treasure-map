@@ -1,4 +1,3 @@
-import {Direction} from '../../src/models/Direction.enum';
 import {isValidDirection} from '../../src/tools/isValidDirection';
 
 describe('isValidDirection', () => {

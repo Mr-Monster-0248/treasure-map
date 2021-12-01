@@ -1,4 +1,4 @@
-import {isValidMove, isOnlyValidMoves} from '../../src/tools/isValidMove';
+import {isOnlyValidMoves, isValidMove} from '../../src/tools/isValidMove';
 
 describe('isValidMove', () => {
   it.each`
