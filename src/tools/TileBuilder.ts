@@ -43,7 +43,7 @@ export class TileBuilder {
   }
 
   public static toLine(tile: Tile, x: number, y: number): string {
-    let preLine = `${tile.identifier} - ${x} - ${x}`;
+    let preLine = `${tile.identifier} - ${x} - ${y}`;
     if (tile.identifier === TileType.TREASURE) {
       preLine += ` - ${tile.treasureNumber || 0}`;
     }
