@@ -15,6 +15,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "test": "jest",
+    "coverage": "yarn test --collectCoverage",
     "prepare": "yarn run compile",
     "pretest": "yarn run compile",
     "posttest": "yarn run lint"

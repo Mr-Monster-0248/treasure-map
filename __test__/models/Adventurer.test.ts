@@ -59,4 +59,10 @@ describe('Adventurer tests', () => {
       expect(adventurer.direction).toBe(nextDirection);
     });
   });
+
+  it('should render a adventurer line', () => {
+    const adventurer = Adventurer.fromLine('A - Alice - 1 - 1 - N - AG');
+
+    expect(adventurer.toLine()).toBe('A - Alice - 1 - 1 - N - 0');
+  });
 });
