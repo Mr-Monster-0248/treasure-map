@@ -154,3 +154,6 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node
 
 build
+
+# exclude output files
+data/output/*.txt
