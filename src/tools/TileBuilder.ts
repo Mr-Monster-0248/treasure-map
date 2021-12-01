@@ -42,6 +42,14 @@ export class TileBuilder {
     return new TileBuilder(tileType, xx, yy, treasureNumber);
   }
 
+  public static toLine(tile: Tile, x: number, y: number): string {
+    let preLine = `${tile.identifier} - ${x} - ${x}`;
+    if (tile.identifier === TileType.TREASURE) {
+      preLine += ` - ${tile.treasureNumber || 0}`;
+    }
+    return preLine;
+  }
+
   public toTile(): Tile {
     return {
       identifier: this.identifier,

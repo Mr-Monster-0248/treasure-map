@@ -2,6 +2,7 @@ import {Tile} from './Tile.interface';
 import {TileBuilder} from '../tools/TileBuilder';
 import {TileType} from './TileType.enum';
 import MapBuilder from '../tools/MapBuilder';
+import {getMapFromLines} from '../services';
 
 export class TreasureMap {
   static readonly IDENTIFIER = 'C';
@@ -13,6 +14,10 @@ export class TreasureMap {
     this.height = height;
     this.width = width;
     this.terrain = this.buildDefaultTerrain();
+  }
+
+  public static fromFileLines(lines: string[]): TreasureMap {
+    return getMapFromLines(lines);
   }
 
   public static fromMapBuilder(builder: MapBuilder): TreasureMap {
@@ -76,5 +81,32 @@ export class TreasureMap {
 
   public tileTreasureAt(x: number, y: number): number | undefined {
     return this.terrain[y][x].treasureNumber;
+  }
+
+  public tileAt(x: number, y: number): Tile | null {
+    if (x > this.width || x < 0) return null;
+    if (y > this.height || y < 0) return null;
+    else return this.terrain[y][x];
+  }
+
+  public toFileLines(): string[] {
+    const fileLines = [];
+
+    // first line is the map declaration
+    fileLines.push(
+      `${TreasureMap.IDENTIFIER} - ${this.width} - ${this.height}`
+    );
+
+    // then we had special tiles
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (this.tileTypeAt(x, y) !== TileType.NORMAL) {
+          const tile = this.tileAt(x, y);
+          if (tile) fileLines.push(TileBuilder.toLine(tile, x, y));
+        }
+      }
+    }
+
+    return fileLines;
   }
 }
