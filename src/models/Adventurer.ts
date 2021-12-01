@@ -3,6 +3,8 @@ import {Move} from './Move.enum';
 import {isValidDirection} from '../tools/isValidDirection';
 import {isOnlyValidMoves} from '../tools/isValidMove';
 import {Tile} from './Tile.interface';
+import {TileType} from './TileType.enum';
+import {TileBuilder} from '../tools/TileBuilder';
 
 export class Adventurer {
   static readonly IDENTIFIER = 'A';
@@ -18,6 +20,7 @@ export class Adventurer {
   y: number;
   direction: Direction;
   moves: Move[];
+  treasure: number;
 
   constructor(
     name: string,
@@ -31,6 +34,7 @@ export class Adventurer {
     this.y = y;
     this.direction = direction;
     this.moves = moves;
+    this.treasure = 0;
   }
 
   public static fromLine(line: string): Adventurer {
@@ -89,7 +93,51 @@ export class Adventurer {
     this.direction = Adventurer.DIRECTIONS[nextDirectionIndex];
   }
 
-  public move(nextTile: Tile) {
-    //TODO: move adventurer
+  public forward(nextTile: Tile | null): TileBuilder | undefined {
+    if (nextTile === null) return;
+    const nextPos = this.getNextPos();
+    switch (nextTile.identifier) {
+      case TileType.MOUNTAIN:
+        return;
+      case TileType.NORMAL:
+        this.x = nextPos.x;
+        this.y = nextPos.y;
+        return;
+      case TileType.TREASURE:
+        this.x = nextPos.x;
+        this.y = nextPos.y;
+        this.treasure += nextTile.treasureNumber || 0;
+        return new TileBuilder(TileType.NORMAL, nextPos.x, nextPos.y);
+      default:
+        throw new Error(`Moving error for ${this.name}`);
+    }
+  }
+
+  public hasMoves(): boolean {
+    return this.moves.length !== 0;
+  }
+
+  /**
+   * Function that move the adventurer on the map, and return a tile if the move changes the map (eg. taking a treasure)
+   * @param nextTile the next tile the adventure will be after his move (null if he do not move)
+   * @returns the tile of the next position if ther is any changes, else return nothing
+   */
+  public move(nextTile: Tile | null): TileBuilder | undefined {
+    const move = this.moves.shift();
+
+    switch (move) {
+      case Move.LEFT:
+      case Move.RIGHT:
+        this.turn(move);
+        return;
+      case Move.FORWARD:
+        return this.forward(nextTile);
+      default:
+        return;
+    }
+  }
+
+  public toLine(): string {
+    return `${Adventurer.IDENTIFIER} - ${this.name} - ${this.x} - ${this.y} - ${this.direction} - ${this.treasure}`;
   }
 }
